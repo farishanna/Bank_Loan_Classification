@@ -103,14 +103,14 @@ target = df['Personal Loan']
 # Checking for imbalanced data on the target
 print(target.value_counts())
 
-# Balancing data using SMOTE
-smote = SMOTE()
-features, target = smote.fit_resample(features, target)
-
 # K fold splitting training and testing data
 kf = KFold(n_splits=10, shuffle=True)
 for train, test in kf.split(features):
     features_train, features_test, target_train, target_test = features[train], features[test], target[train], target[test]
+
+# Balancing data using SMOTE
+smote = SMOTE()
+features_train, target_train = smote.fit_resample(features_train, target_train)
 
 # Prints scores of a specified model 
 def model_scores(model, grid=False):      
